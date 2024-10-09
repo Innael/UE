@@ -19,6 +19,7 @@ void ACppBaseActor::BeginPlay()
 {
 	Super::BeginPlay();	
 	ShowActorInformation();
+	InitialLocation = GetActorLocation();
 }
 
 // Called every frame
@@ -48,4 +49,12 @@ void ACppBaseActor::ShowActorInformation() {
 	UE_LOG(LogTemp, Display, TEXT("Instance name: %s"), *ObjName);
 	UE_LOG(LogTemp, Display, TEXT("Enemy num %d"), EnemyNum);
 	UE_LOG(LogTemp, Display, TEXT("IsAlive: %i"), IsAlive);
+}
+
+void ACppBaseActor::SinMovement() {
+	float x = InitialLocation.X;
+	float y = InitialLocation.Y;
+	float z = Amplitude * sin(Frequency * GetWorld()->GetTimeSeconds()) + InitialLocation.Z;
+	FVector CurrentLocation = FVector(x, y, z);
+	SetActorLocation(CurrentLocation);
 }
